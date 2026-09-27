@@ -5,3 +5,4 @@ pymysql
 cryptography
 pydantic-settings
 python-dotenv
+certifi
