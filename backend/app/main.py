@@ -3,7 +3,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
-from app.routers import auth, cart, members, products
+from app.routers import auth, cart, members, products, transactions
 
 app = FastAPI(title="簡易POSアプリ改 API")
 
@@ -12,6 +12,7 @@ app.include_router(auth.router)
 app.include_router(products.router)
 app.include_router(members.router)
 app.include_router(cart.router)
+app.include_router(transactions.router)
 
 
 @app.get("/health")
