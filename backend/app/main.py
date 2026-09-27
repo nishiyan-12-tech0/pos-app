@@ -3,8 +3,12 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
+from app.routers import products
 
-app = FastAPI()
+app = FastAPI(title="簡易POSアプリ改 API")
+
+# 機能ごとのAPIを登録
+app.include_router(products.router)
 
 
 @app.get("/health")
