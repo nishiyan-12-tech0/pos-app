@@ -38,13 +38,7 @@ export function BarcodeScanner({ onDetected }: Props) {
         ]);
         const reader = new BrowserMultiFormatOneDReader(hints, { delayBetweenScanAttempts: 100 });
         const c = await reader.decodeFromConstraints(
-          {
-            video: {
-              facingMode: "environment",        // スマホ・タブレットは背面カメラ
-              width: { ideal: 1280 },            // 解像度を上げて細いバーも見分けられるようにする
-              height: { ideal: 720 },
-            },
-          },
+          { video: { facingMode: "environment" } }, // スマホ・タブレットは背面カメラ
           videoRef.current!,
           (result) => {
             if (!result) return;
