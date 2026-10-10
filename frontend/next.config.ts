@@ -4,6 +4,9 @@ import type { NextConfig } from "next";
 const BACKEND_URL = process.env.BACKEND_URL ?? "http://127.0.0.1:8000";
 
 const nextConfig: NextConfig = {
+  // Azure App Service 用：動かすのに必要なファイルだけを .next/standalone にまとめる
+  output: "standalone",
+
   // ブラウザは /api/... を Next.js(3000番) に送り、Next.js がバックエンドへ中継する（BFF）
   // → ブラウザから見て同じサイトになるので、ログインのCookieがそのまま使える
   async rewrites() {
