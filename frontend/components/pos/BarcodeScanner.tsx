@@ -3,6 +3,7 @@
 // ① カメラでバーコードを連続して読み取る
 //   一度「開始」すれば止めるまで読み取りを続ける（1回ごとに終了しない：要求2.1）
 import type { IScannerControls } from "@zxing/browser";
+import type { DecodeHintType as HintType } from "@zxing/library";
 import { useEffect, useRef, useState } from "react";
 
 const SAME_CODE_IGNORE_MS = 1500; // 同じバーコードを枠内に置いたままでも連続で拾わないための間隔
@@ -30,13 +31,20 @@ export function BarcodeScanner({ onDetected }: Props) {
         // ライブラリはカメラを使うときだけ読み込む（初回表示を軽くするため）
         const { BrowserMultiFormatOneDReader } = await import("@zxing/browser");
         const { BarcodeFormat, DecodeHintType } = await import("@zxing/library");
-        const hints = new Map([
+        const hints = new Map<HintType, unknown>([
           // JAN(13桁/8桁)=商品、CODE128=会員カード を想定
           [DecodeHintType.POSSIBLE_FORMATS, [BarcodeFormat.EAN_13, BarcodeFormat.EAN_8, BarcodeFormat.CODE_128]],
+          [DecodeHintType.TRY_HARDER, true], // 読み取りにくいバーコードも念入りに探す
         ]);
         const reader = new BrowserMultiFormatOneDReader(hints, { delayBetweenScanAttempts: 100 });
         const c = await reader.decodeFromConstraints(
-          { video: { facingMode: "environment" } }, // スマホ・タブレットは背面カメラ
+          {
+            video: {
+              facingMode: "environment",        // スマホ・タブレットは背面カメラ
+              width: { ideal: 1280 },            // 解像度を上げて細いバーも見分けられるようにする
+              height: { ideal: 720 },
+            },
+          },
           videoRef.current!,
           (result) => {
             if (!result) return;
