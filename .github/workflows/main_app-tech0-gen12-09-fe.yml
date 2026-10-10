@@ -33,9 +33,8 @@ jobs:
         run: |
           npm ci
           npm run build
-        # バックエンドをデプロイしたら、下の2行のコメントを外してURLを入れる
-        # env:
-        #   BACKEND_URL: https://（バックエンドのURL）
+        env:
+          BACKEND_URL: https://app-tech0-gen12-09-be.azurewebsites.net
 
       - name: standalone に静的ファイルをコピー
         run: |
