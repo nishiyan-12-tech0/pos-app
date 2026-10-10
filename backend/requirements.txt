@@ -9,3 +9,4 @@ certifi
 pyjwt
 bcrypt
 tzdata
+gunicorn
