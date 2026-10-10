@@ -34,7 +34,6 @@ export function BarcodeScanner({ onDetected }: Props) {
         const hints = new Map<HintType, unknown>([
           // JAN(13桁/8桁)=商品、CODE128=会員カード を想定
           [DecodeHintType.POSSIBLE_FORMATS, [BarcodeFormat.EAN_13, BarcodeFormat.EAN_8, BarcodeFormat.CODE_128]],
-          [DecodeHintType.TRY_HARDER, true], // 読み取りにくいバーコードも念入りに探す
         ]);
         const reader = new BrowserMultiFormatOneDReader(hints, { delayBetweenScanAttempts: 100 });
         const c = await reader.decodeFromConstraints(
